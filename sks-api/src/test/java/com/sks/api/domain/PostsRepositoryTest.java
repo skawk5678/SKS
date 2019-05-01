@@ -1,7 +1,6 @@
 package com.sks.api.domain;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class PostsRepositoryTest {
 
 	@Test
 	public void deletePosts() {
-		postsRepository.deleteById(1);
+		postsRepository.deleteById((long) 3);
 	}
 
 	@Test
