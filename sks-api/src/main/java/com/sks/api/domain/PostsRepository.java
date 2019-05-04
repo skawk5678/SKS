@@ -1,4 +1,7 @@
 package com.sks.api.domain;
 
-public interface PostsRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface PostsRepository extends CrudRepository<Posts, Long> {
+
 }
