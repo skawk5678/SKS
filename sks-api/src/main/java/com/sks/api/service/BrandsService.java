@@ -25,7 +25,7 @@ public class BrandsService {
 					return new BrandInfoVO(item);
 				}
 			} catch (Exception e) {
-				log.error("no data {}", e);
+				log.error("db error: {}", e);
 			}
 		}
 
