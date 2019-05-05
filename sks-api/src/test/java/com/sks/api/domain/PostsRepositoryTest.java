@@ -9,6 +9,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -16,7 +17,7 @@ import javax.transaction.Transactional;
 public class PostsRepositoryTest {
 
 	@Autowired
-	private PostsRepository postsRepository;
+	private BrandsRepository postsRepository;
 
 	@Test
 	@Transactional
@@ -28,7 +29,7 @@ public class PostsRepositoryTest {
 		posts.setContent("hi");
 		posts.setTitle("sks");
 
-		postsRepository.save(posts);
+//		postsRepository.save(posts);
 	}
 
 	@Test
@@ -43,6 +44,12 @@ public class PostsRepositoryTest {
 
 	@Test
 	public void findAllPosts() {
+		List<Brands> list = (List<Brands>) postsRepository.findAll();
+		for(Brands item : list){
+			log.info("item : {}",item.getId());
+		}
+
 		log.info("postsInfo: {}",postsRepository.findAll());
+
 	}
 }
