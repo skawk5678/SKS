@@ -2,6 +2,8 @@ package com.sks.api.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface BrandsRepository extends CrudRepository<Brands, Long> {
+import java.util.List;
 
+public interface BrandsRepository extends CrudRepository<Brands, Long> {
+	List<Brands> findByName(String name);
 }

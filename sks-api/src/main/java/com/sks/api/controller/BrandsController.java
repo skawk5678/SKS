@@ -22,7 +22,7 @@ public class BrandsController {
 	@RequestMapping(value="/info", method = RequestMethod.GET)
 	@ApiOperation("브랜드 정보")
 	public ResponseEntity<BrandInfoVO> getBrandInfo(@RequestParam String name) {
-		BrandInfoVO brandInfoVO = brandsService.getBrandInfoService(name);
+			BrandInfoVO brandInfoVO = brandsService.getBrandInfoService(name);
 
 		if(ObjectUtils.isEmpty(brandInfoVO))
 			return new ResponseEntity<>(HttpStatus.FORBIDDEN);

@@ -17,18 +17,12 @@ public class BrandsService {
 	BrandsRepository brandsRepository;
 
 	public BrandInfoVO getBrandInfoService(String name) {
-		List<Brands> list = (List<Brands>) brandsRepository.findAll();
+		List<Brands> list = brandsRepository.findByName(name);
 
-		for(Brands item : list){
-			try {
-				if (item.getName().equals(name)) {
-					return new BrandInfoVO(item);
-				}
-			} catch (Exception e) {
-				log.error("db error: {}", e);
-			}
+		if(list.size()==0) {
+			return null;
+		} else {
+			return new BrandInfoVO(list.get(0));
 		}
-
-		return null;
 	}
 }
