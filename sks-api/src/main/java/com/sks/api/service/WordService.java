@@ -90,7 +90,7 @@ public class WordService {
 				else{
 					w.setGoodbad(tmp);
 				}
-				System.out.println(w.getName()+" "+w.getGoodbad());
+//				System.out.println(w.getName()+" "+w.getGoodbad());
 			}
 
 			result_json = om.writeValueAsString(wordVO);

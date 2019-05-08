@@ -38,15 +38,26 @@ public class UserDictionary {
         dictionary.put("사회기여",30);
         dictionary.put("정직",30);
         dictionary.put("모범",30);
-        dictionary.put("부회장",30);
+        dictionary.put("청렴",20);
+        dictionary.put("부조리",-20);
+        dictionary.put("징계",-20);
     }
 
     public int isGoodBad(String word){
-        System.out.println(dictionary.containsKey(word));
+ //       System.out.println(dictionary.containsKey(word));
         if(dictionary.containsKey(word)){
             return  dictionary.get(word);
         }
         else
             return 0;
+    }
+    public int isGoodBad_long(String ptr){
+        int result=0;
+        for(String key : dictionary.keySet()){
+            if(ptr.contains(key)){
+                result+= dictionary.get(key);
+            }
+        }
+        return result;
     }
 }
