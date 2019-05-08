@@ -1,7 +1,6 @@
 package com.sks.api.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자 접근권한을 protected로 제한
