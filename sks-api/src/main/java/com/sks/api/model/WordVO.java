@@ -24,4 +24,12 @@ public class WordVO {
         return weight;
     }
 
+    public int getGoodbad() {
+        return goodbad;
+    }
+
+    public void setGoodbad(int goodbad) {
+        this.goodbad = goodbad;
+    }
+
 }

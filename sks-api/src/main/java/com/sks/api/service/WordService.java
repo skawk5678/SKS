@@ -41,6 +41,7 @@ public class WordService {
 
 
 	public String getWordData() {
+		String result_json="";
 		String brand_name ="삼성";
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.YEAR,-3);
@@ -77,16 +78,27 @@ public class WordService {
 			JsonNode rtobj = node.get("return_object");
 			JsonNode nodes = rtobj.get("nodes");
 			String nodes1 =nodes.toString();
-			System.out.println(nodes1);
-//			ArrayList<WordVO> wordVO = new ArrayList<WordVO>();
+//			System.out.println(nodes1);
 			WordVO[] wordVO;
 			wordVO = om.readValue(nodes1, WordVO[].class);
+			UserDictionary dic = new UserDictionary();
 			for(WordVO w : wordVO){
-				System.out.println(w.getName());
+				int tmp=dic.isGoodBad(w.getName());
+				if(tmp==0) {
+					w.setGoodbad(0);
+				}
+				else{
+					w.setGoodbad(tmp);
+				}
+				System.out.println(w.getName()+" "+w.getGoodbad());
 			}
-			System.out.println(wordVO[3]);
+
+			result_json = om.writeValueAsString(wordVO);
+
+
 		}catch (IOException e){}
-		return result;
+
+		return result_json;
 	}
 
 

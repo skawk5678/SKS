@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/wordcloud")
 public class WordcloudContoller {
     @Autowired
     WordService wordService;
 
 
-/*
+
     @RequestMapping(value = "/wordcloud", method = RequestMethod.GET)
     @ApiOperation("워드 클라우드")
-    public ResponseEntity<List<WordVO>> wordcloud(){
-        return
-    }*/
+    public ResponseEntity<String> wordcloud(){
+        return new ResponseEntity<>(wordService.getWordData(), HttpStatus.OK);
+    }
 }

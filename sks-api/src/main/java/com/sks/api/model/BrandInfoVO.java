@@ -14,7 +14,7 @@ public class BrandInfoVO {
 	private String des;
 
 	public BrandInfoVO(Brands brands){
-
+/*
 		if(!StringUtils.isEmpty(brands.getId()))
 			this.id = brands.getId();
 		if(!StringUtils.isEmpty(brands.getName()))
@@ -23,6 +23,6 @@ public class BrandInfoVO {
 			this.image_url= brands.getImage_url();
 		if(!StringUtils.isEmpty(brands.getDes()))
 			this.des = brands.getDes();
-
+*/
 	}
 }
