@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ public class NewsController {
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	@ApiOperation("첫번째 화면에 띄어줄 뉴스정보들")
-	public ResponseEntity<List<NewsInfoVO>> allNews(){
-		List<NewsInfoVO> newsInfoVOList = newsService.getNewsData();
+	public ResponseEntity<String> allNews(@RequestParam NewsInfoVO newsInfoVO){
+//		List<NewsInfoVO> newsInfoVOList = newsService.getNewsData(newsInfoVO);
 
-		return new ResponseEntity<>(newsInfoVOList, HttpStatus.OK);
+		return new ResponseEntity<>("OK", HttpStatus.OK);
 	}
 
 }

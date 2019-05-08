@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NewsInfoVO {
-	private String news_id;
 	private String title;
-	private String provider_link_page;
-	private String published_at;
+	private String from;
+	private String until;
+
 }
