@@ -21,12 +21,10 @@ public class WordcloudContoller {
     WordService wordService;
 
 
-
+/*
     @RequestMapping(value = "/wordcloud", method = RequestMethod.GET)
     @ApiOperation("워드 클라우드")
     public ResponseEntity<List<WordVO>> wordcloud(){
-        List<NewsInfoVO> newsInfoVOList = newsService.getNewsData();
-
-        return new ResponseEntity<>(newsInfoVOList, HttpStatus.OK);
-    }
+        return
+    }*/
 }

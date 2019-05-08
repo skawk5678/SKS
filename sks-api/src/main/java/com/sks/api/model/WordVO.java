@@ -12,5 +12,16 @@ import java.util.List;
 public class WordVO {
     private int id ;
     private String name;
+    private int level;
     private float weight;
+    private int goodbad;
+
+
+    public String getName(){
+        return name;
+    }
+    public float getWeight(){
+        return weight;
+    }
+
 }

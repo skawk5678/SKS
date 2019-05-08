@@ -1,9 +1,15 @@
 package com.sks.api.service;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.mysql.cj.xdevapi.JsonArray;
-import com.sks.api.model.NewsInfoVO;
 import com.sks.api.model.WordVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
@@ -15,16 +21,15 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import springfox.documentation.spring.web.json.Json;
 
+import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
 @PropertySource("classpath:static/bigkinds.properties")
+
 public class WordService {
 
 	@Value("${bigkinds.url}")
@@ -65,11 +70,22 @@ public class WordService {
 
 		RestTemplate restTemplate = new RestTemplate();
 		String result = restTemplate.postForObject("http://tools.kinds.or.kr:8888/word_cloud", param, String.class);
+		try {
+			ObjectMapper om = new ObjectMapper();
 
-		List<WordVO> wordVOList = new ArrayList<WordVO>();
-
-
-
+			JsonNode node = om.readTree(result);
+			JsonNode rtobj = node.get("return_object");
+			JsonNode nodes = rtobj.get("nodes");
+			String nodes1 =nodes.toString();
+			System.out.println(nodes1);
+//			ArrayList<WordVO> wordVO = new ArrayList<WordVO>();
+			WordVO[] wordVO;
+			wordVO = om.readValue(nodes1, WordVO[].class);
+			for(WordVO w : wordVO){
+				System.out.println(w.getName());
+			}
+			System.out.println(wordVO[3]);
+		}catch (IOException e){}
 		return result;
 	}
 
