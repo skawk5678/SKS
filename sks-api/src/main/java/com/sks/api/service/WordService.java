@@ -1,48 +1,32 @@
 package com.sks.api.service;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.sks.api.model.WordVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
-import springfox.documentation.spring.web.json.Json;
 
 import java.io.IOException;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Logger;
 
 @Service
 @PropertySource("classpath:static/bigkinds.properties")
-
+@Slf4j
 public class WordService {
 
 	@Value("${bigkinds.url}")
 	private String bigkindsUrl;
 
+	private final String key="283bfcdb-f768-4286-b2e7-ee340cfae57c";
 
-	private String key="283bfcdb-f768-4286-b2e7-ee340cfae57c";
-
-
-
-	public String getWordData() {
-		String result_json="";
-		String brand_name ="삼성";
+	public WordVO[] getWordData(String brand_name) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.YEAR,-3);
 		Date d =new Date();
@@ -78,8 +62,8 @@ public class WordService {
 			JsonNode rtobj = node.get("return_object");
 			JsonNode nodes = rtobj.get("nodes");
 			String nodes1 =nodes.toString();
-//			System.out.println(nodes1);
 			WordVO[] wordVO;
+
 			wordVO = om.readValue(nodes1, WordVO[].class);
 			UserDictionary dic = new UserDictionary();
 			for(WordVO w : wordVO){
@@ -90,15 +74,13 @@ public class WordService {
 				else{
 					w.setGoodbad(tmp);
 				}
-//				System.out.println(w.getName()+" "+w.getGoodbad());
 			}
 
-			result_json = om.writeValueAsString(wordVO);
-
-
-		}catch (IOException e){}
-
-		return result_json;
+			return wordVO;
+		}catch (IOException e){
+			log.error("json parsing error {}",e);
+			return null;
+		}
 	}
 
 

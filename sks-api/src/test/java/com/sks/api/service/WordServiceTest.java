@@ -14,7 +14,6 @@ public class WordServiceTest {
     WordService ws = new WordService();
     @Test
     public void test(){
-        System.out.println(ws.getWordData());
 
     }
 }
