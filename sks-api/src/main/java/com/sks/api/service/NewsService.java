@@ -2,9 +2,10 @@ package com.sks.api.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sks.api.model.NewsInfoVO;
-import com.sks.api.model.SearchNewsRepVO;
+import com.sks.api.model.openapi1.openApi1Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,12 +13,14 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @PropertySource("classpath:static/bigkinds.properties")
 public class NewsService {
+	private RestTemplate restTemplate;
+	private HttpHeaders headers;
+	private ObjectMapper objectMapper;
+	private HttpEntity<String> param;
 
 	@Value("${bigkinds.url}")
 	private String bigkindsUrl;
@@ -25,12 +28,37 @@ public class NewsService {
 	@Value("${bigkinds.access_key}")
 	private String accessKey;
 
-	public String getNewsData(NewsInfoVO newsInfoVO) {
+	@Bean
+	private void constructValue() {
+		headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		objectMapper = new ObjectMapper();
+		restTemplate = new RestTemplate();
+	}
+
+	public openApi1Response getNewsData(NewsInfoVO newsInfoVO) {
+		String response = searchNewsRequest(newsInfoVO);
+		openApi1Response openApi1Response = null;
+		log.info("result: {}",response);
+		try {
+			openApi1Response = objectMapper.readValue(response, openApi1Response.class);
+		} catch (Exception e) {
+			log.error("json parsing error {}", e);
+		}
+
+
+		return openApi1Response;
+	}
+
+
+
+
+	private String searchNewsRequest(NewsInfoVO newsInfoVO) {
 		String input = "{\n" +
 				"\t\"access_key\": "+accessKey+", \n" +
 				"     \"argument\": {\n" +
 				"       \"query\": {\n" +
-				"         \"title\":"+newsInfoVO.getTitle()+"\n" +
+				"         \"title\":"+newsInfoVO.getBrand_name()+"\n" +
 				"       },\n" +
 				"\t\t\"published_at\": {\n" +
 				"            \"from\": "+newsInfoVO.getFrom()+",\n" +
@@ -50,17 +78,9 @@ public class NewsService {
 				"\t\t]\n" +
 				"     }\n" +
 				"}";
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<String> param = new HttpEntity<String>(input, headers);
 
-		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.postForObject(bigkindsUrl + "/search/news", param, String.class);
+		param = new HttpEntity<String>(input, headers);
 
-		log.info("result: {}",result);
-
-
-
-		return "list";
+		return restTemplate.postForObject(bigkindsUrl + "/search/news", param, String.class);
 	}
 }

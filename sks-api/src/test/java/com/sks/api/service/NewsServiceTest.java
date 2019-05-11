@@ -1,9 +1,6 @@
 package com.sks.api.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sks.api.model.openapi1.FirstResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,28 +11,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.junit.Assert.*;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-public class NewsServiceTest {
+public class  NewsServiceTest {
 
 	@Test
 	public void jacksonTest() throws IOException {
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.YEAR,-3);
-		Date d =new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String until = sdf.format(d);
-		String from = sdf.format(cal.getTime());
-		String access_key="283bfcdb-f768-4286-b2e7-ee340cfae57c";
-
 		String input = "{\n" +
 				"\t\"access_key\": \"283bfcdb-f768-4286-b2e7-ee340cfae57c\", \n" +
 				"     \"argument\": {\n" +
@@ -57,6 +43,7 @@ public class NewsServiceTest {
 				"            \"provider_news_id\",\n" +
 				"			 \"provider_link_page\",\n" +
 				"			 \"published_at\",\n" +
+				"			 \"images\",\n" +
 				"\t\t]\n" +
 				"     }\n" +
 				"}";
@@ -67,10 +54,12 @@ public class NewsServiceTest {
 		RestTemplate restTemplate = new RestTemplate();
 		String result = restTemplate.postForObject("http://tools.kinds.or.kr:8888/search/news", param, String.class);
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		FirstResponse firstResponse = objectMapper.readValue(result,FirstResponse.class);
 
 		log.info("result: {}",result);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+//		FirstResponse firstResponse = objectMapper.readValue(result, FirstResponse.class);
+
 	}
 
 }
