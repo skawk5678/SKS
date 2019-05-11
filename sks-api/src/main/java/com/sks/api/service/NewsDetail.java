@@ -2,6 +2,7 @@ package com.sks.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sks.api.config.UserDictionaryConfig;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -48,7 +49,7 @@ public class NewsDetail {
 
         }catch (IOException e){}
 
-        UserDictionary dic = new UserDictionary();
+        UserDictionaryConfig dic = new UserDictionaryConfig();
         System.out.println(content);
 
         return dic.isGoodBad_long(content);

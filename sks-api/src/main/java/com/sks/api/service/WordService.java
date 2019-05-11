@@ -2,6 +2,7 @@ package com.sks.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sks.api.config.UserDictionaryConfig;
 import com.sks.api.model.WordVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -65,7 +66,7 @@ public class WordService {
 			WordVO[] wordVO;
 
 			wordVO = om.readValue(nodes1, WordVO[].class);
-			UserDictionary dic = new UserDictionary();
+			UserDictionaryConfig dic = new UserDictionaryConfig();
 			for(WordVO w : wordVO){
 				int tmp=dic.isGoodBad(w.getName());
 				if(tmp==0) {

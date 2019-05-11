@@ -1,13 +1,51 @@
-package com.sks.api.service;
+package com.sks.api.config;
 
+import lombok.Data;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
 import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class UserDictionary {
+@Data
+@Configuration
+public class UserDictionaryConfig {
     Map<String, Integer> dictionary;
+    private List<String> goodContent = new ArrayList<>();
+	private List<String> badContent = new ArrayList<>();
 
-    public UserDictionary(){
+	@PostConstruct
+	public void init() {
+		goodContent.add("기부");
+		goodContent.add("선행");
+		goodContent.add("공헌");
+		goodContent.add("봉사");
+		goodContent.add("연탄봉사");
+		goodContent.add("자선기부");
+		goodContent.add("자선단체");
+		goodContent.add("공익실현");
+		goodContent.add("사회기여");
+		goodContent.add("기부액");
+		goodContent.add("정직");
+		goodContent.add("모범");
+
+		badContent.add("전범");
+		badContent.add("갑질");
+		badContent.add("폭행");
+		badContent.add("입막");
+		badContent.add("위반");
+		badContent.add("은폐");
+		badContent.add("범죄");
+		badContent.add("폭행");
+		badContent.add("송치");
+		badContent.add("횡령");
+		badContent.add("위조");
+	}
+
+    public UserDictionaryConfig(){
         dictionary = new HashMap<String, Integer>();
         dictionary.put("전범",-30);
         dictionary.put("갑질",-20);

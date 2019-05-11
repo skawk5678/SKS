@@ -11,20 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/news")
 @Slf4j
 public class NewsController {
 
 	@Autowired
 	NewsService newsService;
 
-	@PostMapping
-	@RequestMapping(value = "/analyze/access_news_neg_list", method = RequestMethod.POST)
-	@ApiOperation("첫번째 화면에 띄어줄 뉴스정보들")
-	public ResponseEntity<openApi1Response> allNews(@RequestBody NewsInfoVO newsInfoVO){
-		openApi1Response openApi1Response = newsService.getNewsData(newsInfoVO);
+	@PostMapping(value = "/analyze/access_news_list/{good_bad}")
+	@ApiOperation("브랜드 뉴스 리스트-good or bad or all")
+	public ResponseEntity<openApi1Response> allNews(@RequestBody NewsInfoVO newsInfoVO, @PathVariable("good_bad")String good_bad){
+		openApi1Response openApi1Response = newsService.getNewsData(newsInfoVO, good_bad);
 
 		return new ResponseEntity<>(openApi1Response, HttpStatus.OK);
 	}
-
 }
